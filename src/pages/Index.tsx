@@ -48,15 +48,15 @@ const Navigation = () => {
         </button>
 
         <div className="hidden md:flex gap-12 items-center">
-          {['manifest', 'services', 'examples', 'contact'].map((section) => (
+          {['philosophy', 'services', 'process', 'contact'].map((section) => (
             <button
               key={section}
               onClick={() => scrollToSection(section)}
               className="text-[10px] font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors duration-300"
             >
-              {section === 'manifest' && 'Манифест'}
+              {section === 'philosophy' && 'Философия'}
               {section === 'services' && 'Услуги'}
-              {section === 'examples' && 'Примеры'}
+              {section === 'process' && 'Процесс'}
               {section === 'contact' && 'Контакт'}
             </button>
           ))}
@@ -66,15 +66,15 @@ const Navigation = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-card border-t border-border/50 backdrop-blur-xl">
           <div className="container mx-auto px-6 py-6 space-y-5">
-            {['manifest', 'services', 'examples', 'contact'].map((section) => (
+            {['philosophy', 'services', 'process', 'contact'].map((section) => (
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
                 className="block w-full text-left text-[10px] font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors py-2"
               >
-                {section === 'manifest' && 'Манифест'}
+                {section === 'philosophy' && 'Философия'}
                 {section === 'services' && 'Услуги'}
-                {section === 'examples' && 'Примеры'}
+                {section === 'process' && 'Процесс'}
                 {section === 'contact' && 'Контакт'}
               </button>
             ))}
@@ -114,22 +114,28 @@ const HeroSection = () => {
           </div>
           
           <h1 className="font-editorial text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.1] tracking-tight">
-            Примеры наших работ<br />на Тильде
+            Екатерина Дэвиль
           </h1>
           
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-border to-transparent mx-auto" />
           
           <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Дизайн и верстка сайта для сети кофеен в Чехии на двух языках.<br />
-            Также подготовлено техническое задание на фотосъемку и копирайтинг.
+            Маркетолог-стратег. Помогаю бизнесу выстроить систему маркетинга,<br />
+            которая работает без хаоса и приносит предсказуемый результат.
           </p>
           
           <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
-              onClick={() => document.getElementById('examples')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-12 py-4 bg-primary text-primary-foreground text-[10px] font-medium tracking-[0.2em] uppercase rounded-full hover:bg-primary/90 transition-all duration-300"
             >
-              Перейти на сайт
+              Мои услуги
+            </button>
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-12 py-4 border border-primary text-foreground text-[10px] font-medium tracking-[0.2em] uppercase rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            >
+              Связаться
             </button>
           </div>
         </div>
@@ -143,9 +149,9 @@ const HeroSection = () => {
   );
 };
 
-const ManifestSection = () => {
+const PhilosophySection = () => {
   return (
-    <section id="manifest" className="py-32 bg-background relative overflow-hidden">
+    <section id="philosophy" className="py-32 bg-background relative overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-border/20 to-transparent" />
         <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-border/20 to-transparent" />
@@ -153,17 +159,47 @@ const ManifestSection = () => {
 
       <div className="container mx-auto px-6 lg:px-16 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-12 text-center">
-            #01
+          <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-8 text-center">
+            Философия
           </div>
-          
-          <p className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground mb-8 text-center">
-            У нас с клиентом одна цель — сделать так, чтобы бизнес клиента развивался
-          </p>
 
           <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium leading-tight text-center mb-20">
-            Для чего переделывать сайт<br />и переносить его на Тильду?
+            Я выстраиваю маркетинг<br />и продажи, чтобы они<br />работали спокойно
           </h2>
+
+          <div className="grid md:grid-cols-3 gap-12 mb-20">
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full border border-border flex items-center justify-center">
+                <Icon name="Target" size={28} className="text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-4">Без хаоса</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Четкая стратегия вместо спонтанных решений
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full border border-border flex items-center justify-center">
+                <Icon name="Zap" size={28} className="text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-4">Без суеты</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Системный подход к каждой задаче
+              </p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full border border-border flex items-center justify-center">
+                <Icon name="CheckCircle" size={28} className="text-primary" />
+              </div>
+              <h3 className="text-xl font-medium mb-4">Без случайных решений</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Данные и аналитика в основе каждого шага
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full h-px bg-gradient-to-r from-transparent via-border to-transparent mb-20" />
 
           <div className="space-y-0">
             <div className="border-t border-border py-12 grid md:grid-cols-12 gap-8 items-start">
@@ -173,10 +209,10 @@ const ManifestSection = () => {
                 </div>
               </div>
               <div className="md:col-span-10 space-y-4">
-                <h3 className="text-xl md:text-2xl font-medium">Повысить продажи с сайта</h3>
+                <h3 className="text-xl md:text-2xl font-medium">Стратегия маркетинга</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Запроектируем и реализуем эффективный дизайн и обновим структуру сайта и страниц, 
-                  с учетом каналов привлечения клиентов, с сохранением SEO-настроек
+                  Провожу аудит текущих маркетинговых активностей, анализирую целевую аудиторию и конкурентов. 
+                  Разрабатываю стратегию позиционирования и план продвижения на 6-12 месяцев вперед.
                 </p>
               </div>
             </div>
@@ -188,10 +224,10 @@ const ManifestSection = () => {
                 </div>
               </div>
               <div className="md:col-span-10 space-y-4">
-                <h3 className="text-xl md:text-2xl font-medium">Создать и улучшить имидж</h3>
+                <h3 className="text-xl md:text-2xl font-medium">Настройка системы продаж</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Разработаем фирменный стиль, концепцию сайта и UI-Kit, сформируем привлекательный 
-                  образ бренда в digital-среде, с учетом задач бизнеса и портретов аудитории
+                  Выстраиваю воронку продаж от первого касания до сделки. Настраиваю процессы лидогенерации, 
+                  квалификации лидов и работы с возражениями. Внедряю CRM и автоматизирую рутину.
                 </p>
               </div>
             </div>
@@ -203,10 +239,10 @@ const ManifestSection = () => {
                 </div>
               </div>
               <div className="md:col-span-10 space-y-4">
-                <h3 className="text-xl md:text-2xl font-medium">Отстроиться от конкурентов</h3>
+                <h3 className="text-xl md:text-2xl font-medium">Аналитика и оптимизация</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Изучим ваших конкурентов, выявим их сильные стороны и донесем до ваших клиентов, 
-                  почему следует обратиться к вам, а не в другие компании
+                  Настраиваю сквозную аналитику и отчетность. Регулярно анализирую показатели эффективности 
+                  каждого канала. Оптимизирую бюджеты и масштабирую то, что работает.
                 </p>
               </div>
             </div>
@@ -233,50 +269,60 @@ const ServicesSection = () => {
               Услуги
             </div>
             <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium mb-8">
-              Преимущества Тильды,<br />в сравнении с другими CMS
+              Как я работаю<br />с клиентами
             </h2>
           </div>
 
           <div className="grid md:grid-cols-2 gap-px bg-border">
             <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center mb-4">
+                <Icon name="FileText" size={24} className="text-primary" />
+              </div>
               <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
-                Оперативность разработки
+                Маркетинговый аудит
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Тильда позволяет реализовать все задумки дизайнера без программирования, за счет чего 
-                исключается звено между дизайном и маркетингом и конечным продуктом – готовым сайтом. 
-                Мы изначально можем довольно точно просчитать трудозатраты и предусмотреть все нюансы.
+                Комплексный анализ текущей маркетинговой активности вашего бизнеса. Выявляю точки роста 
+                и зоны оптимизации. Готовлю детальный отчет с рекомендациями и планом действий.
               </p>
             </div>
 
             <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center mb-4">
+                <Icon name="Map" size={24} className="text-primary" />
+              </div>
               <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
-                Оптимальный бюджет на разработку
+                Разработка стратегии
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Благодаря архитектуре платформы мы можем предложить оптимальную стоимость разработки 
-                без ущерба качеству. Сокращение времени на технические задачи позволяет больше внимания 
-                уделить дизайну и пользовательскому опыту.
+                Создаю индивидуальную маркетинговую стратегию под ваши бизнес-цели. Определяю позиционирование, 
+                каналы продвижения, медиаплан и KPI. Составляю дорожную карту на 6-12 месяцев.
               </p>
             </div>
 
             <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center mb-4">
+                <Icon name="Settings" size={24} className="text-primary" />
+              </div>
               <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
-                Простота управления
+                Внедрение системы
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Интуитивный интерфейс Тильды позволяет вам самостоятельно вносить изменения в контент, 
-                добавлять новые страницы и блоки. Не нужно обращаться к программистам для простых правок.
+                Помогаю внедрить разработанную стратегию: настраиваю процессы, обучаю команду, запускаю 
+                рекламные кампании. Контролирую выполнение и корректирую план при необходимости.
               </p>
             </div>
 
             <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center mb-4">
+                <Icon name="TrendingUp" size={24} className="text-primary" />
+              </div>
               <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
-                Адаптивность и производительность
+                Постоянное сопровождение
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Все сайты автоматически адаптируются под любые устройства и оптимизированы для быстрой 
-                загрузки. Это критично важно для SEO и конверсии посетителей в клиентов.
+                Регулярные встречи для анализа результатов и корректировки стратегии. Оптимизация бюджетов, 
+                тестирование гипотез, масштабирование успешных каналов. Отчетность и прозрачность процессов.
               </p>
             </div>
           </div>
@@ -286,66 +332,82 @@ const ServicesSection = () => {
   );
 };
 
-const ExamplesSection = () => {
+const ProcessSection = () => {
   return (
-    <section id="examples" className="py-32 bg-background relative">
+    <section id="process" className="py-32 bg-background relative">
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 lg:px-16">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
             <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-8">
-              Портфолио
+              Процесс
             </div>
             <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium">
-              Материал по теме
+              Этапы работы
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="group cursor-pointer">
-              <div className="aspect-[4/3] bg-card overflow-hidden mb-6 border border-border">
-                <img
-                  src="https://cdn.poehali.dev/files/fabc59f1-3626-4dfe-b5e6-7c10a31f6a8f.png"
-                  alt="Материал по теме"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div className="space-y-4">
-                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
-                  Материал по теме
+          <div className="space-y-16">
+            <div className="flex gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center">
+                  <span className="text-sm font-medium">01</span>
                 </div>
-                <h3 className="text-xl font-medium leading-tight">
-                  Почему сайт не продает? ТОП-14 заблуждений и решений для повышения продаж
-                </h3>
-                <button className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors">
-                  Читать
-                  <Icon name="ArrowRight" size={14} />
-                </button>
+              </div>
+              <div className="pt-4">
+                <h3 className="text-xl md:text-2xl font-medium mb-4">Знакомство и диагностика</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Созваниваемся, обсуждаем ваш бизнес, цели и задачи. Я задаю вопросы, чтобы понять текущую 
+                  ситуацию, проблемы и ожидания. Определяем формат сотрудничества и план первых шагов.
+                </p>
               </div>
             </div>
 
-            <div className="group cursor-pointer">
-              <div className="aspect-[4/3] bg-card overflow-hidden mb-6 border border-border">
-                <img
-                  src="https://cdn.poehali.dev/files/d44c4380-6c56-4024-b6e0-43cb970f599e.png"
-                  alt="Редизайн сайта Bagel Lounge"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div className="space-y-4">
-                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
-                  Кейс
+            <div className="flex gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center">
+                  <span className="text-sm font-medium">02</span>
                 </div>
-                <h3 className="text-xl font-medium leading-tight">
-                  Редизайн сайта сети кофеен Bagel Lounge
-                </h3>
-                <button className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors">
-                  Подробнее
-                  <Icon name="ArrowRight" size={14} />
-                </button>
+              </div>
+              <div className="pt-4">
+                <h3 className="text-xl md:text-2xl font-medium mb-4">Глубокий анализ</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Провожу аудит всех маркетинговых активностей, изучаю целевую аудиторию, конкурентов и рынок. 
+                  Анализирую воронку продаж и точки роста. Готовлю детальный отчет с выводами.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center">
+                  <span className="text-sm font-medium">03</span>
+                </div>
+              </div>
+              <div className="pt-4">
+                <h3 className="text-xl md:text-2xl font-medium mb-4">Стратегия и план</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Разрабатываю маркетинговую стратегию с четкими целями, метриками и планом действий. 
+                  Презентую вам стратегию, обсуждаем детали, вносим корректировки при необходимости.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-8">
+              <div className="flex-shrink-0">
+                <div className="w-16 h-16 rounded-full border-2 border-primary flex items-center justify-center">
+                  <span className="text-sm font-medium">04</span>
+                </div>
+              </div>
+              <div className="pt-4">
+                <h3 className="text-xl md:text-2xl font-medium mb-4">Внедрение и рост</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Запускаем стратегию в работу: настраиваю процессы, обучаю команду, контролирую выполнение. 
+                  Регулярно анализируем результаты, оптимизируем и масштабируем успешные решения.
+                </p>
               </div>
             </div>
           </div>
@@ -419,7 +481,7 @@ const Footer = () => {
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Екатерина Дэвиль<br />
-                Частная практика
+                Маркетолог-стратег
               </p>
             </div>
 
@@ -428,9 +490,9 @@ const Footer = () => {
                 Навигация
               </h4>
               <div className="space-y-3">
-                <a href="#manifest" className="block text-xs hover:text-primary transition-colors">Манифест</a>
+                <a href="#philosophy" className="block text-xs hover:text-primary transition-colors">Философия</a>
                 <a href="#services" className="block text-xs hover:text-primary transition-colors">Услуги</a>
-                <a href="#examples" className="block text-xs hover:text-primary transition-colors">Примеры</a>
+                <a href="#process" className="block text-xs hover:text-primary transition-colors">Процесс</a>
                 <a href="#contact" className="block text-xs hover:text-primary transition-colors">Контакт</a>
               </div>
             </div>
@@ -443,8 +505,8 @@ const Footer = () => {
                 <a href="mailto:contact@ekaterinadevillle.com" className="block text-xs hover:text-primary transition-colors">
                   contact@ekaterinadevillle.com
                 </a>
-                <a href="tel:+79991234567" className="block text-xs hover:text-primary transition-colors">
-                  +7 (999) 123-45-67
+                <a href="https://t.me/ekaterinadevillle" target="_blank" rel="noopener noreferrer" className="block text-xs hover:text-primary transition-colors">
+                  Telegram
                 </a>
               </div>
             </div>
@@ -471,9 +533,9 @@ const Index = () => {
     <div className="min-h-screen">
       <Navigation />
       <HeroSection />
-      <ManifestSection />
+      <PhilosophySection />
       <ServicesSection />
-      <ExamplesSection />
+      <ProcessSection />
       <ContactSection />
       <Footer />
     </div>
