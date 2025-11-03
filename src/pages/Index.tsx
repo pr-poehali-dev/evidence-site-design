@@ -99,12 +99,22 @@ const ServicesSection = () => {
                   01
                 </div>
               </div>
-              <div className="md:col-span-11 space-y-5">
+              <div className="md:col-span-7 space-y-5">
                 <h3 className="text-2xl md:text-3xl font-light tracking-tight">Маркетинговая стратегия</h3>
-                <p className="text-[13px] text-muted-foreground/60 leading-loose max-w-2xl font-light">
+                <p className="text-[13px] text-muted-foreground/60 leading-loose font-light">
                   Анализирую бизнес, аудиторию, конкурентов. Создаю стратегию позиционирования 
                   и дорожную карту развития.
                 </p>
+              </div>
+              <div className="md:col-span-4 flex items-start justify-end">
+                <div className="text-right space-y-2">
+                  <div className="text-[10px] font-light tracking-[0.25em] uppercase text-muted-foreground/40">
+                    От
+                  </div>
+                  <div className="text-2xl md:text-3xl font-light tracking-tight">
+                    300 000 ₽
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -114,12 +124,22 @@ const ServicesSection = () => {
                   02
                 </div>
               </div>
-              <div className="md:col-span-11 space-y-5">
+              <div className="md:col-span-7 space-y-5">
                 <h3 className="text-2xl md:text-3xl font-light tracking-tight">Система продаж</h3>
-                <p className="text-[13px] text-muted-foreground/60 leading-loose max-w-2xl font-light">
+                <p className="text-[13px] text-muted-foreground/60 leading-loose font-light">
                   Выстраиваю воронку от касания до сделки. Настраиваю процессы, 
                   CRM и автоматизацию.
                 </p>
+              </div>
+              <div className="md:col-span-4 flex items-start justify-end">
+                <div className="text-right space-y-2">
+                  <div className="text-[10px] font-light tracking-[0.25em] uppercase text-muted-foreground/40">
+                    От
+                  </div>
+                  <div className="text-2xl md:text-3xl font-light tracking-tight">
+                    250 000 ₽
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -129,12 +149,22 @@ const ServicesSection = () => {
                   03
                 </div>
               </div>
-              <div className="md:col-span-11 space-y-5">
+              <div className="md:col-span-7 space-y-5">
                 <h3 className="text-2xl md:text-3xl font-light tracking-tight">Постоянное сопровождение</h3>
-                <p className="text-[13px] text-muted-foreground/60 leading-loose max-w-2xl font-light">
+                <p className="text-[13px] text-muted-foreground/60 leading-loose font-light">
                   Регулярная аналитика, оптимизация и масштабирование. 
                   Прозрачная отчетность по результатам.
                 </p>
+              </div>
+              <div className="md:col-span-4 flex items-start justify-end">
+                <div className="text-right space-y-2">
+                  <div className="text-[10px] font-light tracking-[0.25em] uppercase text-muted-foreground/40">
+                    От
+                  </div>
+                  <div className="text-2xl md:text-3xl font-light tracking-tight">
+                    150 000 ₽<span className="text-muted-foreground/60">/мес</span>
+                  </div>
+                </div>
               </div>
             </div>
 
