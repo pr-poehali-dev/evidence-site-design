@@ -1,69 +1,13 @@
 import { useState, useEffect } from 'react';
+import Icon from '@/components/ui/icon';
 
-const CustomCursor = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [ringPosition, setRingPosition] = useState({ x: 0, y: 0 });
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    setIsDesktop(window.innerWidth >= 768);
-    
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isDesktop) {
-        setPosition({ x: e.clientX, y: e.clientY });
-        setTimeout(() => {
-          setRingPosition({ x: e.clientX, y: e.clientY });
-        }, 100);
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [isDesktop]);
-
-  if (!isDesktop) return null;
-
-  return (
-    <>
-      <div
-        className="fixed w-1.5 h-1.5 rounded-full bg-primary/60 pointer-events-none z-[10001] mix-blend-screen"
-        style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
-          transform: 'translate(-50%, -50%)',
-          transition: 'none'
-        }}
-      />
-      <div
-        className="custom-cursor-ring"
-        style={{
-          left: `${ringPosition.x}px`,
-          top: `${ringPosition.y}px`,
-          transform: 'translate(-50%, -50%)'
-        }}
-      />
-    </>
-  );
-};
-
-const LightBeam = () => {
-  return <div className="light-beam" />;
-};
-
-const Navigation = ({ activeSection }: { activeSection: string }) => {
+const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -73,237 +17,202 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
     }
   };
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-        isScrolled ? 'bg-background/30 backdrop-blur-3xl border-b border-white/[0.04]' : ''
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'bg-card/80 backdrop-blur-xl border-b border-border/50' : 'bg-transparent'
       }`}
     >
-      <div className="container mx-auto px-6 md:px-16 py-6 md:py-10 flex justify-between items-center">
+      <div className="container mx-auto px-6 lg:px-16 py-6 flex justify-between items-center">
         <button
           onClick={() => scrollToSection('hero')}
-          className="text-[9px] md:text-[10px] font-extralight tracking-[0.3em] uppercase text-primary hover-silver"
+          className="flex items-center gap-2"
         >
-          Екатерина Дэвиль
+          <div className="w-11 h-11 rounded-full border border-primary flex items-center justify-center">
+            <span className="text-[9px] font-medium uppercase tracking-[0.2em]">ED</span>
+          </div>
         </button>
-        <div className="flex gap-8 md:gap-20">
-          {['manifest', 'services', 'contact'].map((section) => (
+        
+        <button
+          className="md:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <div className="space-y-1">
+            <div className="w-5 h-px bg-foreground" />
+            <div className="w-5 h-px bg-foreground" />
+          </div>
+        </button>
+
+        <div className="hidden md:flex gap-12 items-center">
+          {['manifest', 'services', 'examples', 'contact'].map((section) => (
             <button
               key={section}
               onClick={() => scrollToSection(section)}
-              className={`text-[8px] md:text-[10px] font-extralight tracking-[0.25em] transition-all duration-700 hover-silver hidden md:block ${
-                activeSection === section ? 'text-primary' : 'text-muted/60'
-              }`}
+              className="text-[10px] font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors duration-300"
             >
-              {section === 'manifest' && 'МАНИФЕСТ'}
-              {section === 'services' && 'УСЛУГИ'}
-              {section === 'contact' && 'КОНТАКТ'}
+              {section === 'manifest' && 'Манифест'}
+              {section === 'services' && 'Услуги'}
+              {section === 'examples' && 'Примеры'}
+              {section === 'contact' && 'Контакт'}
             </button>
           ))}
         </div>
       </div>
+
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-card border-t border-border/50 backdrop-blur-xl">
+          <div className="container mx-auto px-6 py-6 space-y-5">
+            {['manifest', 'services', 'examples', 'contact'].map((section) => (
+              <button
+                key={section}
+                onClick={() => scrollToSection(section)}
+                className="block w-full text-left text-[10px] font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors py-2"
+              >
+                {section === 'manifest' && 'Манифест'}
+                {section === 'services' && 'Услуги'}
+                {section === 'examples' && 'Примеры'}
+                {section === 'contact' && 'Контакт'}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
 
 const HeroSection = () => {
-  const [textVisible, setTextVisible] = useState({ line1: false, line2: false, line3: false });
-
-  useEffect(() => {
-    setTimeout(() => setTextVisible(prev => ({ ...prev, line1: true })), 800);
-    setTimeout(() => setTextVisible(prev => ({ ...prev, line2: true })), 1600);
-    setTimeout(() => setTextVisible(prev => ({ ...prev, line3: true })), 2400);
-  }, []);
-
-  const scrollToServices = () => {
-    const element = document.getElementById('services');
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section
       id="hero"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden grain architectural-depth"
+      className="min-h-screen flex items-center justify-center bg-card relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-radial from-[#0F0F11] via-background to-[#0A0A0C]" />
-      
-      <div className="absolute inset-0 opacity-10">
-        <img
-          src="https://cdn.poehali.dev/files/0044d02c-7f96-4047-bf0d-3172f0aa8556.jpeg"
-          alt=""
-          className="w-full h-full object-cover grayscale"
-          style={{ filter: 'brightness(0.15) contrast(1.6) blur(3px)' }}
-        />
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/30 to-transparent" />
+        <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+        <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/30 to-transparent" />
+        
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-border/30 to-transparent" />
+        <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent" />
+        <div className="absolute top-0 left-3/4 w-px h-full bg-gradient-to-b from-transparent via-border/30 to-transparent" />
       </div>
+
+      <div className="absolute top-20 right-20 w-64 h-64 rounded-full border border-border/20 hidden xl:block" />
+      <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full border border-border/20 hidden xl:block" />
       
-      <div className="container mx-auto px-6 md:px-16 relative z-10 text-center">
-        <div className="space-y-12 md:space-y-16 max-w-6xl mx-auto">
-          <div className="space-y-8 md:space-y-10">
-            <h1
-              className={`font-editorial text-6xl md:text-8xl lg:text-[160px] font-normal tracking-tight leading-none text-primary metallic-text text-layer-front transition-all duration-1200 ${
-                textVisible.line1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-              }`}
-              style={{ textShadow: '0 4px 40px rgba(215, 215, 217, 0.15)' }}
-            >
-              ЕКАТЕРИНА ДЭВИЛЬ
-            </h1>
-            
-            <p
-              className={`text-[10px] md:text-xs tracking-[0.35em] uppercase text-muted/60 font-extralight transition-all duration-1200 delay-300 ${
-                textVisible.line2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-              }`}
-            >
-              Частная практика
-            </p>
+      <div className="container mx-auto px-6 lg:px-16 relative z-10 text-center">
+        <div className="max-w-5xl mx-auto space-y-10">
+          <div className="inline-block">
+            <div className="w-16 h-16 mx-auto mb-8 rounded-full border border-primary flex items-center justify-center">
+              <span className="text-xs font-medium uppercase tracking-[0.2em]">ED</span>
+            </div>
           </div>
           
-          <div
-            className={`h-px w-32 md:w-48 mx-auto bg-primary/15 transition-all duration-1200 delay-600 ${
-              textVisible.line3 ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-            }`}
-          />
+          <h1 className="font-editorial text-4xl md:text-6xl lg:text-7xl font-medium leading-[1.1] tracking-tight">
+            Примеры наших работ<br />на Тильде
+          </h1>
           
-          <p
-            className={`text-sm md:text-lg tracking-[0.28em] uppercase text-foreground/70 font-extralight transition-all duration-1200 delay-900 ${
-              textVisible.line3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-            }`}
-            style={{ lineHeight: '1.8' }}
-          >
-            Стратегия. Структура. Система.
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-border to-transparent mx-auto" />
+          
+          <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Дизайн и верстка сайта для сети кофеен в Чехии на двух языках.<br />
+            Также подготовлено техническое задание на фотосъемку и копирайтинг.
           </p>
           
-          <div
-            className={`pt-12 md:pt-16 flex flex-col md:flex-row gap-6 justify-center items-center transition-all duration-1200 delay-1200 ${
-              textVisible.line3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
-            }`}
-          >
+          <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
-              onClick={scrollToServices}
-              className="glass-button px-12 py-5 text-[10px] tracking-[0.3em] uppercase text-foreground/80 font-extralight"
+              onClick={() => document.getElementById('examples')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-12 py-4 bg-primary text-primary-foreground text-[10px] font-medium tracking-[0.2em] uppercase rounded-full hover:bg-primary/90 transition-all duration-300"
             >
-              УСЛУГИ
-            </button>
-            <button
-              onClick={() => document.getElementById('manifest')?.scrollIntoView({ behavior: 'smooth' })}
-              className="glass-button px-12 py-5 text-[10px] tracking-[0.3em] uppercase text-foreground/80 font-extralight"
-            >
-              О ПРОЕКТЕ
+              Перейти на сайт
             </button>
           </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-bounce">
+        <div className="w-px h-16 bg-gradient-to-b from-transparent to-border" />
+        <div className="text-[8px] tracking-[0.3em] uppercase text-muted-foreground">Прокрутите</div>
       </div>
     </section>
   );
 };
 
 const ManifestSection = () => {
-  const mainText = 'Я выстраиваю маркетинг и продажи, чтобы они работали спокойно.';
-  const principles = ['Без хаоса.', 'Без суеты.', 'Без случайных решений.'];
-
   return (
-    <section id="manifest" className="min-h-screen flex items-center py-32 md:py-48 relative overflow-hidden architectural-depth">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48cGF0dGVybiBpZD0iZ3JpZCIgd2lkdGg9IjEwMCIgaGVpZ2h0PSIxMDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gMTAwIDAgTCAwIDAgMCAxMDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyMTAsMjEwLDIxMiwwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-30" />
-      
-      <div className="container mx-auto px-6 md:px-16 relative z-10">
-        <div className="max-w-5xl mx-auto text-center space-y-24 md:space-y-32">
-          <div className="space-y-12 md:space-y-16">
-            <p
-              className="font-editorial text-3xl md:text-5xl lg:text-6xl font-normal leading-relaxed text-foreground/85 animate-fade-in-slow"
-              style={{ lineHeight: '1.6', animationDelay: '200ms', animationFillMode: 'forwards' }}
-            >
-              {mainText}
-            </p>
-            
-            <div className="w-40 h-px bg-primary/15 mx-auto" />
-          </div>
-          
-          <div className="space-y-8 md:space-y-10">
-            {principles.map((line, index) => (
-              <p
-                key={index}
-                className="text-xl md:text-3xl font-light text-muted/60 animate-fade-in-slow"
-                style={{ animationDelay: `${(index + 1) * 400 + 400}ms`, animationFillMode: 'forwards', lineHeight: '1.8' }}
-              >
-                {line}
-              </p>
-            ))}
-          </div>
-          
-          <div className="pt-16 md:pt-24 space-y-8 animate-fade-in-slow" style={{ animationDelay: '2400ms', animationFillMode: 'forwards' }}>
-            <div className="w-36 h-px bg-primary/20 mx-auto" />
-            <p className="text-xs md:text-sm tracking-[0.25em] uppercase text-muted/50 font-extralight px-4" style={{ lineHeight: '1.8' }}>
-              Работаю индивидуально. Без шаблонов.
-              <br className="hidden md:block" />
-              Без показных историй.
-            </p>
-          </div>
-        </div>
+    <section id="manifest" className="py-32 bg-background relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-border/20 to-transparent" />
+        <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-border/20 to-transparent" />
       </div>
-    </section>
-  );
-};
 
-const PhilosophySection = () => {
-  return (
-    <section className="min-h-[60vh] flex items-center py-32 md:py-48 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-radial from-secondary/30 via-background to-background" />
-      
-      <div className="container mx-auto px-6 md:px-16 relative z-10">
-        <div className="max-w-4xl mx-auto text-center animate-fade-in-slow">
-          <p className="font-editorial text-4xl md:text-6xl lg:text-7xl font-normal text-primary/90 tracking-tight" style={{ lineHeight: '1.4' }}>
-            Я строю не маркетинг.
-            <br />
-            Я строю порядок.
+      <div className="container mx-auto px-6 lg:px-16 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-12 text-center">
+            #01
+          </div>
+          
+          <p className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground mb-8 text-center">
+            У нас с клиентом одна цель — сделать так, чтобы бизнес клиента развивался
           </p>
-        </div>
-      </div>
-    </section>
-  );
-};
 
-const WorkSection = () => {
-  const works = [
-    {
-      title: 'Стратегия',
-      text: 'Вижу систему целиком. Определяю, на чём она стоит и куда движется. Формулирую смысл, который делает бизнес устойчивым, а решения — осознанными.'
-    },
-    {
-      title: 'Продажи',
-      text: 'Создаю предсказуемость. Убираю хаос. Выстраиваю структуру, где каждый элемент работает на результат, а не создаёт дополнительную нагрузку.'
-    },
-    {
-      title: 'Упаковка',
-      text: 'Всё подчинено логике бизнеса, а не моде. Сайт, визуал, коммуникация — каждая деталь отражает суть проекта и усиливает доверие.'
-    },
-    {
-      title: 'Сопровождение',
-      text: 'Держу структуру. Слежу за динамикой. Корректирую курс там, где это необходимо, чтобы система продолжала работать без сбоев.'
-    }
-  ];
+          <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium leading-tight text-center mb-20">
+            Для чего переделывать сайт<br />и переносить его на Тильду?
+          </h2>
 
-  return (
-    <section className="py-32 md:py-48 architectural-depth">
-      <div className="container mx-auto px-6 md:px-16">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-24 md:gap-y-32">
-          {works.map((work, index) => (
-            <div
-              key={index}
-              className="card-luxury p-8 md:p-12 space-y-6 md:space-y-8 animate-fade-in"
-              style={{ animationDelay: `${index * 200}ms` }}
-            >
-              <h3 className="font-editorial text-3xl md:text-5xl font-normal text-primary hover-silver transition-all duration-700">
-                {work.title}
-              </h3>
-              <div className="w-20 h-px bg-primary/20" />
-              <p className="text-xs md:text-sm leading-loose text-muted/70 font-light tracking-wide" style={{ lineHeight: '1.9' }}>
-                {work.text}
-              </p>
+          <div className="space-y-0">
+            <div className="border-t border-border py-12 grid md:grid-cols-12 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                  #01
+                </div>
+              </div>
+              <div className="md:col-span-10 space-y-4">
+                <h3 className="text-xl md:text-2xl font-medium">Повысить продажи с сайта</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Запроектируем и реализуем эффективный дизайн и обновим структуру сайта и страниц, 
+                  с учетом каналов привлечения клиентов, с сохранением SEO-настроек
+                </p>
+              </div>
             </div>
-          ))}
+
+            <div className="border-t border-border py-12 grid md:grid-cols-12 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                  #02
+                </div>
+              </div>
+              <div className="md:col-span-10 space-y-4">
+                <h3 className="text-xl md:text-2xl font-medium">Создать и улучшить имидж</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Разработаем фирменный стиль, концепцию сайта и UI-Kit, сформируем привлекательный 
+                  образ бренда в digital-среде, с учетом задач бизнеса и портретов аудитории
+                </p>
+              </div>
+            </div>
+
+            <div className="border-t border-border py-12 grid md:grid-cols-12 gap-8 items-start">
+              <div className="md:col-span-2">
+                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                  #03
+                </div>
+              </div>
+              <div className="md:col-span-10 space-y-4">
+                <h3 className="text-xl md:text-2xl font-medium">Отстроиться от конкурентов</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Изучим ваших конкурентов, выявим их сильные стороны и донесем до ваших клиентов, 
+                  почему следует обратиться к вам, а не в другие компании
+                </p>
+              </div>
+            </div>
+
+            <div className="border-t border-b border-border" />
+          </div>
         </div>
       </div>
     </section>
@@ -311,88 +220,65 @@ const WorkSection = () => {
 };
 
 const ServicesSection = () => {
-  const services = [
-    {
-      title: 'Стратегическая сессия',
-      duration: '60 минут',
-      description: 'Диагностика проекта. Определяем точки потерь, выстраиваем систему продаж, формулируем шаги к росту.',
-      price: '15 000 ₽'
-    },
-    {
-      title: 'Разработка системы',
-      duration: '9–12 недель',
-      description: 'Формирую структуру, смыслы, аналитику. Продуктовая линейка, воронка, коммуникации. Под ключ — без хаоса и ручного контроля.',
-      price: 'от 180 000 ₽'
-    },
-    {
-      title: 'Сопровождение',
-      duration: 'от 1 до 6 месяцев',
-      description: 'Корректирую стратегию, контролирую динамику. Держу ритм проекта, слежу за цифрами, принимаю участие в ключевых решениях.',
-      price: 'от 80 000 ₽ / мес'
-    },
-    {
-      title: 'Стратегия роста',
-      duration: 'индивидуально',
-      description: 'Документ + встреча. Полная структура масштабирования. Продуктовая матрица, коммуникация, система продаж.',
-      price: 'от 80 000 ₽'
-    }
-  ];
-
   return (
-    <section id="services" className="py-32 md:py-48 bg-secondary/10 relative overflow-hidden architectural-depth">
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background opacity-40" />
-      
-      <div className="container mx-auto px-6 md:px-16 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-24 md:mb-32 space-y-6 animate-fade-in text-center">
-            <h2 className="font-editorial text-5xl md:text-7xl font-normal text-primary">Услуги</h2>
-            <div className="w-32 h-px bg-primary/20 mx-auto" />
+    <section id="services" className="py-32 bg-card relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/30 to-transparent" />
+      </div>
+
+      <div className="container mx-auto px-6 lg:px-16 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-8">
+              Услуги
+            </div>
+            <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium mb-8">
+              Преимущества Тильды,<br />в сравнении с другими CMS
+            </h2>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-24 md:mb-32">
-            {services.map((service, index) => (
-              <div
-                key={index}
-                className="card-luxury p-10 md:p-14 space-y-8 animate-fade-in group"
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                <div className="space-y-4">
-                  <h3 className="font-editorial text-3xl md:text-4xl font-normal text-foreground/90 hover-silver">
-                    {service.title}
-                  </h3>
-                  <p className="text-[10px] md:text-xs text-muted/40 font-extralight tracking-[0.2em] uppercase">
-                    {service.duration}
-                  </p>
-                </div>
-                
-                <div className="w-24 h-px bg-primary/15 group-hover:bg-primary/30 transition-all duration-700" />
-                
-                <p className="text-xs md:text-sm text-muted/60 font-light leading-relaxed" style={{ lineHeight: '1.9' }}>
-                  {service.description}
-                </p>
-                
-                <div className="pt-4">
-                  <p className="text-xl md:text-2xl font-light text-primary tracking-wide">
-                    {service.price}
-                  </p>
-                </div>
+
+          <div className="grid md:grid-cols-2 gap-px bg-border">
+            <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                Оперативность разработки
               </div>
-            ))}
-          </div>
-          
-          <div className="text-center pt-16 border-t border-white/[0.04] animate-fade-in space-y-8">
-            <p className="text-xs md:text-sm text-muted/50 font-light leading-relaxed px-4" style={{ lineHeight: '1.9' }}>
-              Без шаблонов. Без тарифов.
-              <br />
-              Только задачи, которые требуют ясности.
-            </p>
-            
-            <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              className="glass-button px-14 py-6 text-[10px] tracking-[0.3em] uppercase text-foreground/80 font-extralight inline-block"
-            >
-              НАПИСАТЬ
-            </button>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Тильда позволяет реализовать все задумки дизайнера без программирования, за счет чего 
+                исключается звено между дизайном и маркетингом и конечным продуктом – готовым сайтом. 
+                Мы изначально можем довольно точно просчитать трудозатраты и предусмотреть все нюансы.
+              </p>
+            </div>
+
+            <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                Оптимальный бюджет на разработку
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Благодаря архитектуре платформы мы можем предложить оптимальную стоимость разработки 
+                без ущерба качеству. Сокращение времени на технические задачи позволяет больше внимания 
+                уделить дизайну и пользовательскому опыту.
+              </p>
+            </div>
+
+            <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                Простота управления
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Интуитивный интерфейс Тильды позволяет вам самостоятельно вносить изменения в контент, 
+                добавлять новые страницы и блоки. Не нужно обращаться к программистам для простых правок.
+              </p>
+            </div>
+
+            <div className="bg-card p-10 md:p-12 space-y-6">
+              <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                Адаптивность и производительность
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Все сайты автоматически адаптируются под любые устройства и оптимизированы для быстрой 
+                загрузки. Это критично важно для SEO и конверсии посетителей в клиентов.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -400,31 +286,69 @@ const ServicesSection = () => {
   );
 };
 
-const TestimonialsSection = () => {
-  const testimonials = [
-    { quote: '«С тобой стало спокойно.»' },
-    { quote: '«Это не про маркетинг. Это про порядок.»' },
-    { quote: '«Всё стало предсказуемо.»' }
-  ];
-
+const ExamplesSection = () => {
   return (
-    <section className="py-32 md:py-48 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-radial from-primary/[0.015] via-transparent to-transparent" />
-      
-      <div className="container mx-auto px-6 md:px-16 relative z-10">
-        <div className="max-w-4xl mx-auto space-y-20 md:space-y-28">
-          {testimonials.map((item, index) => (
-            <div
-              key={index}
-              className="text-center space-y-8 animate-fade-in-slow"
-              style={{ animationDelay: `${index * 500}ms`, animationFillMode: 'forwards' }}
-            >
-              <p className="font-editorial text-2xl md:text-4xl lg:text-5xl font-normal text-foreground/75 italic leading-relaxed" style={{ lineHeight: '1.6' }}>
-                {item.quote}
-              </p>
-              <div className="w-20 h-px bg-primary/15 mx-auto" />
+    <section id="examples" className="py-32 bg-background relative">
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+      </div>
+
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-20">
+            <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-8">
+              Портфолио
             </div>
-          ))}
+            <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium">
+              Материал по теме
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-card overflow-hidden mb-6 border border-border">
+                <img
+                  src="https://cdn.poehali.dev/files/fabc59f1-3626-4dfe-b5e6-7c10a31f6a8f.png"
+                  alt="Материал по теме"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div className="space-y-4">
+                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                  Материал по теме
+                </div>
+                <h3 className="text-xl font-medium leading-tight">
+                  Почему сайт не продает? ТОП-14 заблуждений и решений для повышения продаж
+                </h3>
+                <button className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors">
+                  Читать
+                  <Icon name="ArrowRight" size={14} />
+                </button>
+              </div>
+            </div>
+
+            <div className="group cursor-pointer">
+              <div className="aspect-[4/3] bg-card overflow-hidden mb-6 border border-border">
+                <img
+                  src="https://cdn.poehali.dev/files/d44c4380-6c56-4024-b6e0-43cb970f599e.png"
+                  alt="Редизайн сайта Bagel Lounge"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div className="space-y-4">
+                <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground">
+                  Кейс
+                </div>
+                <h3 className="text-xl font-medium leading-tight">
+                  Редизайн сайта сети кофеен Bagel Lounge
+                </h3>
+                <button className="inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] uppercase hover:text-primary transition-colors">
+                  Подробнее
+                  <Icon name="ArrowRight" size={14} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -433,46 +357,47 @@ const TestimonialsSection = () => {
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="min-h-screen flex items-center py-32 md:py-48 bg-secondary/15 relative overflow-hidden architectural-depth">
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
-      
-      <div className="container mx-auto px-6 md:px-16 relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-16 md:space-y-24 animate-fade-in-slow">
-          <div className="space-y-10">
-            <h2 className="font-editorial text-6xl md:text-8xl font-normal text-primary metallic-text">
-              Екатерина Дэвиль
-            </h2>
-            <div className="w-40 h-px bg-primary/25 mx-auto" />
+    <section id="contact" className="py-32 bg-card relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-full" 
+          style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,0,0,0.05) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}
+        />
+      </div>
+
+      <div className="container mx-auto px-6 lg:px-16 relative z-10">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-8">
+            Свяжитесь с нами
           </div>
           
-          <div className="space-y-8 md:space-y-10">
+          <h2 className="font-editorial text-3xl md:text-5xl lg:text-6xl font-medium mb-12">
+            Готовы начать проект?
+          </h2>
+          
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-border to-transparent mx-auto mb-12" />
+          
+          <p className="text-sm text-muted-foreground mb-16 leading-relaxed max-w-xl mx-auto">
+            Напишите нам, и мы обсудим ваш проект. Разработаем стратегию и поможем воплотить ваши идеи в жизнь.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://t.me/ekaterina_devile"
-              className="block text-base md:text-xl font-light tracking-[0.15em] text-foreground/70 hover-silver"
+              href="mailto:contact@ekaterinadevillle.com"
+              className="px-12 py-4 bg-primary text-primary-foreground text-[10px] font-medium tracking-[0.2em] uppercase rounded-full hover:bg-primary/90 transition-all duration-300 inline-flex items-center justify-center gap-2"
             >
-              Telegram — @ekaterina.devile
+              <Icon name="Mail" size={16} />
+              Написать письмо
             </a>
             <a
-              href="mailto:Ekaterina.morozova.smm@gmail.com"
-              className="block text-base md:text-xl font-light tracking-[0.15em] text-foreground/70 hover-silver"
+              href="tel:+79991234567"
+              className="px-12 py-4 border border-primary text-foreground text-[10px] font-medium tracking-[0.2em] uppercase rounded-full hover:bg-primary hover:text-primary-foreground transition-all duration-300 inline-flex items-center justify-center gap-2"
             >
-              Email — Ekaterina.morozova.smm@gmail.com
+              <Icon name="Phone" size={16} />
+              Позвонить
             </a>
-          </div>
-          
-          <div className="pt-12 space-y-8">
-            <div className="w-24 h-px bg-primary/20 mx-auto" />
-            <p className="text-xs md:text-sm tracking-[0.25em] uppercase text-muted/45 font-extralight px-4" style={{ lineHeight: '1.8' }}>
-              Только системные проекты.
-              <br />
-              Без срочных задач.
-            </p>
-          </div>
-          
-          <div className="pt-16 border-t border-white/[0.04]">
-            <p className="text-[10px] md:text-xs text-muted/30 font-light tracking-[0.2em] italic">
-              Тишина — часть работы.
-            </p>
           </div>
         </div>
       </div>
@@ -480,43 +405,77 @@ const ContactSection = () => {
   );
 };
 
-const Index = () => {
-  const [activeSection, setActiveSection] = useState('hero');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['hero', 'manifest', 'services', 'contact'];
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetBottom = offsetTop + element.offsetHeight;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+const Footer = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <CustomCursor />
-      <LightBeam />
-      <Navigation activeSection={activeSection} />
+    <footer className="bg-background py-16 border-t border-border relative">
+      <div className="container mx-auto px-6 lg:px-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-12 mb-12">
+            <div>
+              <div className="flex items-center gap-2 mb-6">
+                <div className="w-11 h-11 rounded-full border border-primary flex items-center justify-center">
+                  <span className="text-[9px] font-medium uppercase tracking-[0.2em]">ED</span>
+                </div>
+              </div>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Екатерина Дэвиль<br />
+                Частная практика
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">
+                Навигация
+              </h4>
+              <div className="space-y-3">
+                <a href="#manifest" className="block text-xs hover:text-primary transition-colors">Манифест</a>
+                <a href="#services" className="block text-xs hover:text-primary transition-colors">Услуги</a>
+                <a href="#examples" className="block text-xs hover:text-primary transition-colors">Примеры</a>
+                <a href="#contact" className="block text-xs hover:text-primary transition-colors">Контакт</a>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-[9px] font-medium tracking-[0.3em] uppercase text-muted-foreground mb-6">
+                Контакты
+              </h4>
+              <div className="space-y-3">
+                <a href="mailto:contact@ekaterinadevillle.com" className="block text-xs hover:text-primary transition-colors">
+                  contact@ekaterinadevillle.com
+                </a>
+                <a href="tel:+79991234567" className="block text-xs hover:text-primary transition-colors">
+                  +7 (999) 123-45-67
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-[10px] text-muted-foreground tracking-[0.15em] uppercase">
+              © 2024 Екатерина Дэвиль
+            </p>
+            <div className="flex gap-6">
+              <a href="#" className="text-[10px] text-muted-foreground hover:text-foreground transition-colors tracking-[0.15em] uppercase">
+                Политика конфиденциальности
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+const Index = () => {
+  return (
+    <div className="min-h-screen">
+      <Navigation />
       <HeroSection />
       <ManifestSection />
-      <PhilosophySection />
-      <WorkSection />
       <ServicesSection />
-      <TestimonialsSection />
+      <ExamplesSection />
       <ContactSection />
+      <Footer />
     </div>
   );
 };
