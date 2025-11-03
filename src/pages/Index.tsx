@@ -119,6 +119,19 @@ const ServicesSection = () => {
 
           <div className="space-y-10 animate-fade-in">
             <h3 className="text-[22px] md:text-[26px] font-light tracking-[-0.01em] text-foreground">
+              Консультация
+            </h3>
+            <p className="text-[11px] md:text-[12px] text-muted-foreground leading-[2.2] tracking-[0.01em] font-light max-w-2xl">
+              120 минут. Глубокая проработка задачи.<br />
+              Анализ, рекомендации, план действий.
+            </p>
+            <div className="text-[13px] font-light tracking-wide text-foreground/90">
+              25 000 ₽
+            </div>
+          </div>
+
+          <div className="space-y-10 animate-fade-in">
+            <h3 className="text-[22px] md:text-[26px] font-light tracking-[-0.01em] text-foreground">
               Разработка системы
             </h3>
             <p className="text-[11px] md:text-[12px] text-muted-foreground leading-[2.2] tracking-[0.01em] font-light max-w-2xl">
@@ -155,9 +168,7 @@ const ServicesSection = () => {
             </div>
           </div>
 
-          <p className="text-[9px] md:text-[10px] text-muted-foreground/50 leading-[2] tracking-[0.02em] font-light pt-16">
-            В некоторых проектах работаем совместно с Данилой — техническая система и интеграции.
-          </p>
+
 
         </div>
       </div>
