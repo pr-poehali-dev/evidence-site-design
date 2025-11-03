@@ -52,7 +52,12 @@
       sans-serif;
     font-weight: 200;
     letter-spacing: 0.03em;
-    cursor: none;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      cursor: none;
+    }
   }
 
   html {
