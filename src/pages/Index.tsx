@@ -55,17 +55,32 @@ const HeroSection = () => {
         <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/10 to-transparent" />
       </div>
       
-      <div className="container mx-auto px-8 lg:px-20 relative z-10 text-center">
-        <div className="max-w-4xl mx-auto space-y-16">
-          <h1 className="font-editorial text-5xl md:text-7xl lg:text-8xl font-light leading-[1.05] tracking-tighter">
-            Маркетинг<br />без хаоса
-          </h1>
-          
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-border/40 to-transparent mx-auto" />
-          
-          <p className="text-[13px] md:text-[15px] text-muted-foreground/60 max-w-md mx-auto leading-loose tracking-wide font-light">
-            Стратегия и система для предсказуемого роста
-          </p>
+      <div className="container mx-auto px-8 lg:px-20 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-16 text-center lg:text-left order-2 lg:order-1">
+              <h1 className="font-editorial text-5xl md:text-7xl lg:text-8xl font-light leading-[1.05] tracking-tighter">
+                Маркетинг<br />без хаоса
+              </h1>
+              
+              <div className="w-16 h-px bg-gradient-to-r from-transparent via-border/40 to-transparent mx-auto lg:mx-0" />
+              
+              <p className="text-[13px] md:text-[15px] text-muted-foreground/60 max-w-md mx-auto lg:mx-0 leading-loose tracking-wide font-light">
+                Стратегия и система для предсказуемого роста
+              </p>
+            </div>
+            
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-br from-border/5 to-transparent rounded-lg" />
+                <img
+                  src="https://cdn.poehali.dev/projects/4283f6fa-c06b-4e29-bf10-34c544333b17/files/6456892b-0118-478f-8ab1-6ba21bf124bb.jpg"
+                  alt="Екатерина Дэвиль"
+                  className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-lg grayscale hover:grayscale-0 transition-all duration-700"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -112,7 +127,7 @@ const ServicesSection = () => {
                     От
                   </div>
                   <div className="text-2xl md:text-3xl font-light tracking-tight">
-                    300 000 ₽
+                    500 000 ₽
                   </div>
                 </div>
               </div>
@@ -137,7 +152,7 @@ const ServicesSection = () => {
                     От
                   </div>
                   <div className="text-2xl md:text-3xl font-light tracking-tight">
-                    250 000 ₽
+                    400 000 ₽
                   </div>
                 </div>
               </div>
@@ -162,7 +177,7 @@ const ServicesSection = () => {
                     От
                   </div>
                   <div className="text-2xl md:text-3xl font-light tracking-tight">
-                    150 000 ₽<span className="text-muted-foreground/60">/мес</span>
+                    200 000 ₽<span className="text-muted-foreground/60">/мес</span>
                   </div>
                 </div>
               </div>
