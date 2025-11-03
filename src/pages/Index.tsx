@@ -29,7 +29,7 @@ const CustomCursor = () => {
 
   return (
     <div
-      className="custom-cursor"
+      className="fixed w-2 h-2 rounded-full bg-primary/40 pointer-events-none z-[10000] mix-blend-screen transition-transform duration-150"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -60,28 +60,27 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-        isScrolled ? 'bg-background/60 backdrop-blur-xl border-b border-white/[0.08]' : ''
+        isScrolled ? 'bg-background/40 backdrop-blur-2xl border-b border-white/[0.05]' : ''
       }`}
     >
       <div className="container mx-auto px-6 md:px-12 py-6 md:py-8 flex justify-between items-center">
         <button
           onClick={() => scrollToSection('hero')}
-          className="text-[10px] md:text-xs font-light tracking-[0.2em] uppercase text-primary hover-gold"
+          className="text-[10px] md:text-xs font-light tracking-[0.25em] uppercase text-primary hover-silver"
         >
           Екатерина Дэвиль
         </button>
         <div className="flex gap-6 md:gap-16">
-          {['approach', 'services', 'results', 'contact'].map((section) => (
+          {['manifest', 'services', 'contact'].map((section) => (
             <button
               key={section}
               onClick={() => scrollToSection(section)}
-              className={`text-[9px] md:text-xs font-light tracking-[0.15em] transition-all duration-500 hover-gold hidden md:block ${
+              className={`text-[9px] md:text-xs font-light tracking-[0.2em] transition-all duration-500 hover-silver hidden md:block ${
                 activeSection === section ? 'text-primary' : 'text-muted'
               }`}
             >
-              {section === 'approach' && 'О подходе'}
+              {section === 'manifest' && 'Манифест'}
               {section === 'services' && 'Услуги'}
-              {section === 'results' && 'Результаты'}
               {section === 'contact' && 'Контакт'}
             </button>
           ))}
@@ -95,9 +94,9 @@ const HeroSection = () => {
   const [textVisible, setTextVisible] = useState({ line1: false, line2: false, line3: false });
 
   useEffect(() => {
-    setTimeout(() => setTextVisible(prev => ({ ...prev, line1: true })), 400);
-    setTimeout(() => setTextVisible(prev => ({ ...prev, line2: true })), 1200);
-    setTimeout(() => setTextVisible(prev => ({ ...prev, line3: true })), 2000);
+    setTimeout(() => setTextVisible(prev => ({ ...prev, line1: true })), 600);
+    setTimeout(() => setTextVisible(prev => ({ ...prev, line2: true })), 1400);
+    setTimeout(() => setTextVisible(prev => ({ ...prev, line3: true })), 2200);
   }, []);
 
   return (
@@ -105,80 +104,104 @@ const HeroSection = () => {
       id="hero"
       className="min-h-screen flex items-center justify-center relative overflow-hidden grain"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-secondary/20 breathing-glow" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background breathing-glow" />
       
-      <div className="absolute inset-0 opacity-25">
+      <div className="absolute inset-0 opacity-15">
         <img
           src="https://cdn.poehali.dev/files/0044d02c-7f96-4047-bf0d-3172f0aa8556.jpeg"
           alt=""
           className="w-full h-full object-cover grayscale"
-          style={{ filter: 'brightness(0.25) contrast(1.3)' }}
+          style={{ filter: 'brightness(0.2) contrast(1.5) blur(2px)' }}
         />
       </div>
       
       <div className="container mx-auto px-6 md:px-12 relative z-10 text-center">
-        <div className="space-y-6 md:space-y-8 max-w-5xl mx-auto">
-          <h1
-            className={`font-editorial text-5xl md:text-7xl lg:text-[120px] font-normal tracking-tight leading-none text-primary text-glow transition-all duration-1000 ${
-              textVisible.line1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
-            ЕКАТЕРИНА ДЭВИЛЬ
-          </h1>
+        <div className="space-y-8 md:space-y-12 max-w-6xl mx-auto">
+          <div className="space-y-6">
+            <h1
+              className={`font-editorial text-5xl md:text-7xl lg:text-[140px] font-normal tracking-tight leading-none text-primary metallic-text transition-all duration-1200 ${
+                textVisible.line1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+            >
+              ЕКАТЕРИНА ДЭВИЛЬ
+            </h1>
+            
+            <p
+              className={`text-[11px] md:text-sm tracking-[0.3em] uppercase text-muted/70 font-extralight transition-all duration-1200 delay-200 ${
+                textVisible.line2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+            >
+              Частная практика
+            </p>
+          </div>
           
-          <div className="h-px w-20 md:w-32 mx-auto bg-primary/30 my-8 md:my-12" />
+          <div
+            className={`h-px w-24 md:w-40 mx-auto bg-primary/20 transition-all duration-1200 delay-400 ${
+              textVisible.line3 ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
+            }`}
+          />
           
           <p
-            className={`text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.25em] uppercase text-primary/90 font-light transition-all duration-1000 delay-300 ${
-              textVisible.line2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            className={`text-xs md:text-base tracking-[0.25em] uppercase text-foreground/80 font-light transition-all duration-1200 delay-600 ${
+              textVisible.line3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
             }`}
           >
-            СТРАТЕГИЯ. СТРУКТУРА. СИСТЕМА.
+            Стратегия. Структура. Система.
           </p>
         </div>
-        
-        <p
-          className={`absolute bottom-16 md:bottom-24 left-1/2 transform -translate-x-1/2 text-[9px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] uppercase text-muted/60 font-light transition-all duration-1000 delay-700 ${
-            textVisible.line3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
-          Частная практика. Индивидуальные проекты.
-        </p>
       </div>
     </section>
   );
 };
 
-const ApproachSection = () => {
-  const lines = [
-    'Я строю маркетинг и продажи,',
-    'чтобы они работали спокойно.',
-    '',
+const ManifestSection = () => {
+  const mainLines = [
+    'Я выстраиваю маркетинг и продажи,',
+    'чтобы они работали спокойно.'
+  ];
+
+  const principles = [
     'Без хаоса.',
     'Без суеты.',
     'Без случайных решений.'
   ];
 
   return (
-    <section id="approach" className="min-h-screen flex items-center py-20 md:py-32 bg-secondary/30">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-12">
-          {lines.map((line, index) => (
-            <p
-              key={index}
-              className={`font-editorial text-2xl md:text-4xl lg:text-5xl font-normal leading-relaxed text-foreground/90 animate-fade-in-slow ${
-                line === '' ? 'my-4 md:my-8' : ''
-              }`}
-              style={{ animationDelay: `${index * 300}ms`, animationFillMode: 'forwards' }}
-            >
-              {line}
-            </p>
-          ))}
+    <section id="manifest" className="min-h-screen flex items-center py-20 md:py-32 bg-secondary/20 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background opacity-60" />
+      
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-5xl mx-auto text-center space-y-16 md:space-y-24">
+          <div className="space-y-8 md:space-y-12">
+            {mainLines.map((line, index) => (
+              <p
+                key={index}
+                className="font-editorial text-3xl md:text-5xl lg:text-6xl font-normal leading-relaxed text-foreground/90 animate-fade-in-slow"
+                style={{ animationDelay: `${index * 400}ms`, animationFillMode: 'forwards' }}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
           
-          <div className="pt-12 md:pt-16">
-            <div className="w-16 md:w-24 h-px bg-primary/40 mx-auto mb-6 md:mb-8" />
-            <p className="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] uppercase text-muted/70 font-light px-4">
-              Работаю индивидуально. Без шаблонов. Без показных решений.
+          <div className="space-y-6 md:space-y-8">
+            {principles.map((line, index) => (
+              <p
+                key={index}
+                className="text-xl md:text-3xl font-light text-muted/70 animate-fade-in-slow"
+                style={{ animationDelay: `${(index + 2) * 400}ms`, animationFillMode: 'forwards' }}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+          
+          <div className="pt-12 md:pt-20 space-y-6 animate-fade-in-slow" style={{ animationDelay: '2000ms', animationFillMode: 'forwards' }}>
+            <div className="w-32 h-px bg-primary/30 mx-auto" />
+            <p className="text-xs md:text-sm tracking-[0.2em] uppercase text-muted/60 font-light leading-relaxed px-4">
+              Работаю индивидуально. Без шаблонов.
+              <br className="hidden md:block" />
+              Без показных историй.
             </p>
           </div>
         </div>
@@ -189,37 +212,43 @@ const ApproachSection = () => {
 
 const WorkSection = () => {
   const works = [
-    { title: 'СТРАТЕГИЯ', text: 'вижу систему целиком. определяю, что и зачем.' },
-    { title: 'ПРОДАЖИ', text: 'создаю предсказуемость. убираю хаос.' },
-    { title: 'УПАКОВКА', text: 'всё подчинено логике, а не моде.' },
-    { title: 'СОПРОВОЖДЕНИЕ', text: 'держу структуру. слежу за динамикой.' }
+    {
+      title: 'Стратегия',
+      text: 'Вижу систему целиком. Определяю, на чём она стоит и куда движется. Формулирую смысл, который делает бизнес устойчивым, а решения — осознанными.'
+    },
+    {
+      title: 'Продажи',
+      text: 'Создаю предсказуемость. Убираю хаос. Выстраиваю структуру, где каждый элемент работает на результат, а не создаёт дополнительную нагрузку.'
+    },
+    {
+      title: 'Упаковка',
+      text: 'Всё подчинено логике бизнеса, а не моде. Сайт, визуал, коммуникация — каждая деталь отражает суть проекта и усиливает доверие.'
+    },
+    {
+      title: 'Сопровождение',
+      text: 'Держу структуру. Слежу за динамикой. Корректирую курс там, где это необходимо, чтобы система продолжала работать без сбоев.'
+    }
   ];
 
   return (
     <section className="min-h-screen flex items-center py-20 md:py-32">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-3xl mx-auto space-y-12 md:space-y-20">
+        <div className="max-w-4xl mx-auto space-y-16 md:space-y-24">
           {works.map((work, index) => (
             <div
               key={index}
-              className="group animate-fade-in"
+              className="group animate-fade-in space-y-6 md:space-y-8"
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <h3 className="font-editorial text-3xl md:text-5xl font-normal mb-4 md:mb-6 text-primary hover-gold">
+              <h3 className="font-editorial text-4xl md:text-6xl font-normal text-primary hover-silver transition-all duration-700">
                 {work.title}
               </h3>
-              <div className="w-12 md:w-16 h-px bg-primary/20 mb-4 md:mb-6" />
-              <p className="text-xs md:text-sm leading-loose text-muted/80 font-light lowercase tracking-wide">
+              <div className="w-20 md:w-28 h-px bg-primary/15 group-hover:bg-primary/40 transition-all duration-700" />
+              <p className="text-sm md:text-base leading-loose md:leading-loose text-muted/80 font-light tracking-wide" style={{ lineHeight: '1.8' }}>
                 {work.text}
               </p>
             </div>
           ))}
-          
-          <div className="pt-8 md:pt-12 border-t border-white/[0.08]">
-            <p className="text-[10px] md:text-xs text-muted/50 font-light leading-relaxed">
-              Техническую архитектуру проектов ведёт Даня — сайт, CRM, интеграции.
-            </p>
-          </div>
         </div>
       </div>
     </section>
@@ -231,61 +260,72 @@ const ServicesSection = () => {
 
   const services = [
     {
-      title: 'СТРАТЕГИЧЕСКАЯ СЕССИЯ',
-      price: '15 000 ₽',
-      description: '60 минут. Диагностика проекта. Определяем точки потерь, выстраиваем систему продаж, формулируем шаги к росту.'
+      title: 'Стратегическая сессия',
+      duration: '60 минут',
+      description: 'Диагностика проекта. Определяем точки потерь, выстраиваем систему продаж, формулируем шаги к росту. Формат: онлайн, один на один.',
+      price: '15 000 ₽'
     },
     {
-      title: 'РАЗРАБОТКА СИСТЕМЫ',
-      price: 'от 180 000 ₽',
-      description: '9–12 недель. Формирование стратегии, структуры, смыслов. Продуктовая линейка, воронка, коммуникации, аналитика.'
+      title: 'Разработка системы',
+      duration: '9–12 недель',
+      description: 'Формирую структуру, смыслы, аналитику. Продуктовая линейка, воронка, коммуникации. Под ключ — без хаоса и ручного контроля.',
+      price: 'от 180 000 ₽'
     },
     {
-      title: 'СТРАТЕГИЧЕСКОЕ СОПРОВОЖДЕНИЕ',
-      price: 'от 80 000 ₽ / мес',
-      description: 'От 1 до 6 месяцев. Совместная работа над проектом. Держу стратегию, корректирую действия, контролирую динамику.'
+      title: 'Сопровождение',
+      duration: 'от 1 до 6 месяцев',
+      description: 'Личное участие. Корректирую динамику и стратегию. Держу ритм проекта, слежу за цифрами, принимаю участие в ключевых решениях.',
+      price: 'от 80 000 ₽ / месяц'
     },
     {
-      title: 'РАЗБОР ПРОЕКТА',
-      price: '20 000 ₽',
-      description: '7–10 рабочих дней. Точечный анализ. Выявляю узкие места, точки потерь, нестыковки в логике продаж.'
-    },
-    {
-      title: 'СТРАТЕГИЯ РОСТА',
-      price: 'от 80 000 ₽',
-      description: 'Полная стратегия развития проекта. Продуктовая матрица, коммуникация, система продаж, точки масштабирования.'
+      title: 'Стратегия роста',
+      duration: 'индивидуально',
+      description: 'Полный план развития проекта. Продуктовая матрица, коммуникация, система продаж, точки масштабирования. Документ + встреча для внедрения.',
+      price: 'от 80 000 ₽'
     }
   ];
 
   return (
-    <section id="services" className="min-h-screen py-20 md:py-32 bg-secondary/20">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-6 md:space-y-8 mb-16 md:mb-24">
+    <section id="services" className="min-h-screen py-20 md:py-32 bg-secondary/10 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-secondary/30 to-transparent" />
+      
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-16 md:mb-24 space-y-4 animate-fade-in">
+            <h2 className="font-editorial text-4xl md:text-6xl font-normal text-primary">Услуги</h2>
+            <div className="w-24 h-px bg-primary/20" />
+          </div>
+          
+          <div className="space-y-8 md:space-y-12 mb-16 md:mb-24">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="border-b border-white/[0.08] pb-6 md:pb-8 cursor-pointer group animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="border-b border-white/[0.06] pb-8 md:pb-12 cursor-pointer group animate-fade-in silver-glow"
+                style={{ animationDelay: `${index * 150}ms` }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
               >
-                <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-3 md:mb-4 gap-2">
-                  <h3 className="font-editorial text-lg md:text-2xl font-normal text-foreground/90 hover-gold">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm md:text-lg font-light text-primary tracking-wide">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 md:gap-8 mb-4">
+                  <div className="flex-1">
+                    <h3 className="font-editorial text-2xl md:text-4xl font-normal text-foreground/90 hover-silver mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-xs md:text-sm text-muted/50 font-light tracking-wide">
+                      {service.duration}
+                    </p>
+                  </div>
+                  <p className="text-lg md:text-2xl font-light text-primary tracking-wide whitespace-nowrap">
                     {service.price}
                   </p>
                 </div>
                 
                 <div
                   className={`overflow-hidden transition-all duration-700 ${
-                    hoveredIndex === index ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+                    hoveredIndex === index ? 'max-h-40 opacity-100 mt-6' : 'max-h-0 opacity-0'
                   }`}
                 >
-                  <p className="text-[10px] md:text-xs text-muted/70 font-light leading-relaxed pt-3 md:pt-4">
+                  <p className="text-xs md:text-sm text-muted/70 font-light leading-relaxed" style={{ lineHeight: '1.8' }}>
                     {service.description}
                   </p>
                 </div>
@@ -293,11 +333,11 @@ const ServicesSection = () => {
             ))}
           </div>
           
-          <div className="text-center pt-8 md:pt-12 border-t border-white/[0.08]">
-            <p className="text-[10px] md:text-xs text-muted/50 font-light leading-relaxed px-4">
-              Некоторые проекты реализуются совместно с Даней.
+          <div className="text-center pt-12 border-t border-white/[0.06] animate-fade-in">
+            <p className="text-xs md:text-sm text-muted/60 font-light leading-relaxed px-4" style={{ lineHeight: '1.8' }}>
+              Без шаблонов. Без тарифов.
               <br />
-              Я — стратегия, он — архитектура.
+              Только задачи, которые требуют ясности.
             </p>
           </div>
         </div>
@@ -306,60 +346,43 @@ const ServicesSection = () => {
   );
 };
 
-const ResultsSection = () => {
-  const results = [
+const TestimonialsSection = () => {
+  const testimonials = [
     {
-      metric: '+27% к выручке',
-      context: 'за первый месяц после настройки системы продаж.',
-      detail: 'Заявки перестали теряться.'
+      quote: '«С тобой стало спокойно.»',
+      context: 'Основатель онлайн-школы'
     },
     {
-      metric: '−3 часа рутины ежедневно',
-      context: 'после автоматизации.',
-      detail: 'Команда работает в одном ритме.'
+      quote: '«Это не про маркетинг. Это про порядок.»',
+      context: 'Владелец сети салонов'
+    },
+    {
+      quote: '«Первый раз за два года всё предсказуемо.»',
+      context: 'CEO технологического стартапа'
     }
   ];
 
-  const quotes = [
-    '«С тобой стало спокойно.»',
-    '«Это не про маркетинг. Это про порядок.»'
-  ];
-
   return (
-    <section id="results" className="min-h-screen flex items-center py-20 md:py-32">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 mb-16 md:mb-24">
-            {results.map((result, index) => (
-              <div
-                key={index}
-                className="space-y-4 md:space-y-6 animate-fade-in"
-                style={{ animationDelay: `${index * 200}ms` }}
-              >
-                <h3 className="font-editorial text-3xl md:text-5xl font-normal text-primary leading-tight">
-                  {result.metric}
-                </h3>
-                <p className="text-xs md:text-sm text-muted/70 font-light leading-relaxed">
-                  {result.context}
-                </p>
-                <p className="text-[10px] md:text-xs text-muted/50 font-light italic">
-                  {result.detail}
-                </p>
-              </div>
-            ))}
-          </div>
-          
-          <div className="space-y-6 md:space-y-8 pt-8 md:pt-12 border-t border-white/[0.08]">
-            {quotes.map((quote, index) => (
-              <p
-                key={index}
-                className="font-editorial text-lg md:text-2xl font-normal text-muted/60 italic text-center animate-fade-in-slow px-4"
-                style={{ animationDelay: `${(index + 2) * 300}ms` }}
-              >
-                {quote}
+    <section className="min-h-screen flex items-center py-20 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-radial from-primary/[0.02] via-transparent to-transparent opacity-40" />
+      
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-4xl mx-auto space-y-16 md:space-y-24">
+          {testimonials.map((item, index) => (
+            <div
+              key={index}
+              className="text-center space-y-6 animate-fade-in-slow"
+              style={{ animationDelay: `${index * 400}ms`, animationFillMode: 'forwards' }}
+            >
+              <p className="font-editorial text-2xl md:text-4xl font-normal text-foreground/80 italic leading-relaxed">
+                {item.quote}
               </p>
-            ))}
-          </div>
+              <div className="w-16 h-px bg-primary/20 mx-auto" />
+              <p className="text-xs md:text-sm text-muted/50 font-light tracking-wide">
+                {item.context}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -368,29 +391,47 @@ const ResultsSection = () => {
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="min-h-screen flex items-center py-20 md:py-32 bg-secondary/30">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="max-w-2xl mx-auto text-center space-y-12 md:space-y-16 animate-fade-in-slow">
+    <section id="contact" className="min-h-screen flex items-center py-20 md:py-32 bg-secondary/20 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
+      
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-3xl mx-auto text-center space-y-12 md:space-y-20 animate-fade-in-slow">
+          <div className="space-y-8">
+            <h2 className="font-editorial text-5xl md:text-7xl font-normal text-primary metallic-text">
+              Екатерина Дэвиль
+            </h2>
+            <div className="w-32 h-px bg-primary/30 mx-auto" />
+          </div>
+          
           <div className="space-y-6 md:space-y-8">
             <a
               href="https://t.me/ekaterina_devile"
-              className="block text-sm md:text-lg font-light tracking-[0.08em] md:tracking-[0.1em] text-foreground hover-gold"
+              className="block text-base md:text-xl font-light tracking-[0.12em] text-foreground/80 hover-silver"
             >
               Telegram — @ekaterina.devile
             </a>
             <a
               href="mailto:info@devile.ru"
-              className="block text-sm md:text-lg font-light tracking-[0.08em] md:tracking-[0.1em] text-foreground hover-gold"
+              className="block text-base md:text-xl font-light tracking-[0.12em] text-foreground/80 hover-silver"
             >
               Email — info@devile.ru
             </a>
           </div>
           
-          <div className="w-12 md:w-16 h-px bg-primary/30 mx-auto" />
+          <div className="pt-8 space-y-6">
+            <div className="w-20 h-px bg-primary/20 mx-auto" />
+            <p className="text-xs md:text-sm tracking-[0.2em] uppercase text-muted/50 font-light px-4">
+              Только системные проекты.
+              <br />
+              Без срочных задач.
+            </p>
+          </div>
           
-          <p className="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.2em] uppercase text-muted/50 font-light px-4">
-            Только системные проекты. Без срочных задач.
-          </p>
+          <div className="pt-12">
+            <p className="text-[10px] md:text-xs text-muted/40 font-light tracking-[0.15em] italic">
+              Тишина — часть работы.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -402,7 +443,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'approach', 'services', 'results', 'contact'];
+      const sections = ['hero', 'manifest', 'services', 'contact'];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
 
       for (const section of sections) {
@@ -427,10 +468,10 @@ const Index = () => {
       <CustomCursor />
       <Navigation activeSection={activeSection} />
       <HeroSection />
-      <ApproachSection />
+      <ManifestSection />
       <WorkSection />
       <ServicesSection />
-      <ResultsSection />
+      <TestimonialsSection />
       <ContactSection />
     </div>
   );
