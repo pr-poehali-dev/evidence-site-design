@@ -32,7 +32,7 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
           Екатерина Дэвиль
         </button>
         <div className="flex gap-12">
-          {['approach', 'work', 'results', 'contact', 'vision'].map((section) => (
+          {['approach', 'services', 'results', 'contact', 'vision'].map((section) => (
             <button
               key={section}
               onClick={() => scrollToSection(section)}
@@ -42,7 +42,7 @@ const Navigation = ({ activeSection }: { activeSection: string }) => {
             >
               <span className="relative">
                 {section === 'approach' && 'О подходе'}
-                {section === 'work' && 'Работа'}
+                {section === 'services' && 'Услуги'}
                 {section === 'results' && 'Результаты'}
                 {section === 'contact' && 'Контакт'}
                 {section === 'vision' && 'Vision'}
@@ -148,51 +148,106 @@ const ApproachSection = () => {
   );
 };
 
-const WorkSection = () => {
+const ServicesSection = () => {
+  const services = [
+    {
+      number: '1',
+      title: 'Стратегическая сессия',
+      duration: '60 минут',
+      description: 'Диагностика проекта. Определяем точки потерь, выстраиваем систему продаж, формулируем шаги к росту. Формат: онлайн, один на один.',
+      price: '15 000 ₽',
+      note: 'Можно использовать как разовый вход в работу. Без шаблонов и чек-листов.'
+    },
+    {
+      number: '2',
+      title: 'Разработка системы маркетинга и продаж',
+      duration: '9 – 12 недель',
+      description: 'Формирование стратегии, структуры, смыслов. Продуктовая линейка, воронка, коммуникации, аналитика. Под ключ — без хаоса и ручного контроля.',
+      price: 'от 180 000 ₽',
+      note: 'Екатерина — стратегия. Даня — техническая архитектура: сайт, CRM, чат-боты. Результат — работающая система с понятной логикой и цифрами.'
+    },
+    {
+      number: '3',
+      title: 'Стратегическое сопровождение',
+      duration: 'от 1 до 6 месяцев',
+      description: 'Совместная работа над проектом. Я держу стратегию, корректирую действия, контролирую динамику. Формат — личное сопровождение: созвоны, разборы, структура.',
+      price: 'от 80 000 ₽ / месяц',
+      note: 'При длительном сопровождении стоимость снижается. Работаю только с проектами, где уже есть движение.'
+    },
+    {
+      number: '4',
+      title: 'Разбор сайта / воронки / коммуникации',
+      duration: '7 – 10 рабочих дней',
+      description: 'Точечный анализ. Выявляю узкие места, точки потерь, нестыковки в логике продаж. После — рекомендации по доработке и систематизации.',
+      price: '20 000 ₽',
+      note: 'Технический аудит и корректировки выполняются совместно с партнером — разработка за доп. плату.'
+    },
+    {
+      number: '5',
+      title: 'Индивидуальная стратегия роста',
+      duration: 'индивидуально',
+      description: 'Полная стратегия развития проекта. Продуктовая матрица, коммуникация, система продаж, точки масштабирования. Документ + встреча для внедрения.',
+      price: 'от 80 000 ₽',
+      note: 'Для проектов, готовых перейти на новый уровень стабильности.'
+    }
+  ];
+
   return (
-    <section id="work" className="min-h-screen flex items-center py-24">
+    <section id="services" className="min-h-screen py-32 bg-secondary/5">
       <div className="container mx-auto px-8">
-        <h2 className="text-5xl font-light tracking-tight mb-20 animate-fade-in">Формат работы</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 animate-fade-in">
-          {[
-            {
-              title: 'Стратегия',
-              text: 'Диагностика бизнеса, позиционирование, структура продукта. Определяем, что продавать, кому и как.'
-            },
-            {
-              title: 'Система продаж',
-              text: 'Воронки, CRM, автоматизация, аналитика. Создаю порядок, где раньше были хаотичные действия.'
-            },
-            {
-              title: 'Упаковка',
-              text: 'Сайт, контент, визуал. Всё подчинено логике бизнеса, а не моде.'
-            },
-            {
-              title: 'Сопровождение',
-              text: 'Поддерживаю проект до результата. Слежу за цифрами и ритмом.'
-            }
-          ].map((item, index) => (
-            <div
-              key={index}
-              className="space-y-4 group"
-              style={{ animationDelay: `${index * 150}ms` }}
-            >
-              <h3 className="text-3xl font-light tracking-wide group-hover:text-muted transition-colors duration-300">
-                {item.title}
-              </h3>
-              <div className="w-12 h-px bg-foreground/30 group-hover:w-24 transition-all duration-500" />
-              <p className="text-sm leading-relaxed text-muted/90 font-light max-w-md">
-                {item.text}
-              </p>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-20 text-center animate-fade-in">
-          <p className="text-sm text-muted/60 font-light tracking-wide">
-            Без тарифов. Без пакетов. Под задачу.
-          </p>
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-5xl font-light tracking-tight mb-8 animate-fade-in">Услуги</h2>
+          <div className="w-20 h-px bg-foreground/20 mb-20 animate-fade-in" />
+          
+          <div className="space-y-20">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="border-t border-border/20 pt-12 animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="grid grid-cols-12 gap-8">
+                  <div className="col-span-1">
+                    <p className="text-sm text-muted/40 font-light">{service.number}</p>
+                  </div>
+                  
+                  <div className="col-span-11 space-y-6">
+                    <div className="flex justify-between items-start gap-8">
+                      <h3 className="text-2xl font-light tracking-wide leading-tight">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-muted/60 font-light whitespace-nowrap">
+                        {service.duration}
+                      </p>
+                    </div>
+                    
+                    <p className="text-sm leading-relaxed text-muted/80 font-light max-w-2xl">
+                      {service.description}
+                    </p>
+                    
+                    <div className="flex justify-between items-end pt-4">
+                      <p className="text-xs text-muted/60 font-light max-w-xl leading-relaxed">
+                        {service.note}
+                      </p>
+                      <p className="text-xl font-light tracking-wide">
+                        {service.price}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="mt-24 pt-12 border-t border-border/20 animate-fade-in">
+            <p className="text-sm text-muted/70 font-light leading-relaxed max-w-2xl">
+              Я не делаю «быстрых решений».
+              <br />
+              Не веду запусков, не пишу контент, не беру хаотичные задачи.
+              <br />
+              Работаю только, если вижу системный потенциал.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -348,7 +403,7 @@ const Index = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'approach', 'work', 'results', 'contact', 'vision'];
+      const sections = ['hero', 'approach', 'services', 'results', 'contact', 'vision'];
       const scrollPosition = window.scrollY + window.innerHeight / 2;
 
       for (const section of sections) {
@@ -373,7 +428,7 @@ const Index = () => {
       <Navigation activeSection={activeSection} />
       <HeroSection />
       <ApproachSection />
-      <WorkSection />
+      <ServicesSection />
       <ResultsSection />
       <ContactSection />
       <VisionSection />
