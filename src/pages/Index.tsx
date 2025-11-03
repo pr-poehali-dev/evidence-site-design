@@ -180,6 +180,17 @@ const ServicesSection = () => {
             </div>
           </div>
 
+          <div className="pt-8">
+            <a
+              href="https://t.me/m/FM24xut5MTUy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-12 py-5 border border-border/40 text-[10px] tracking-[0.25em] uppercase font-light hover:bg-foreground/5 hover:border-foreground/20 transition-all duration-700"
+            >
+              Связаться
+            </a>
+          </div>
+
 
 
         </div>
@@ -201,12 +212,32 @@ const ContactSection = () => {
             <div className="space-y-5 text-[10px] md:text-[11px] text-muted-foreground leading-[2.4] tracking-[0.01em] font-light">
               <div>
                 <a 
-                  href="https://t.me/ekaterina.devile"
+                  href="https://t.me/ekaterina_devile"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-all duration-700"
                 >
-                  Telegram — @ekaterina.devile
+                  Telegram — @ekaterina_devile
+                </a>
+              </div>
+              <div>
+                <a 
+                  href="https://www.instagram.com/ekaterina.devile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-all duration-700"
+                >
+                  Instagram — @ekaterina.devile
+                </a>
+              </div>
+              <div>
+                <a 
+                  href="https://www.tiktok.com/@ekaterina.devile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-all duration-700"
+                >
+                  TikTok — @ekaterina.devile
                 </a>
               </div>
               <div>
