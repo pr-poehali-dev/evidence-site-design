@@ -158,13 +158,25 @@ const ServicesSection = () => {
 
           <div className="space-y-10 animate-fade-in">
             <h3 className="text-[22px] md:text-[26px] font-light tracking-[-0.01em] text-foreground">
-              Стратегия роста
+              Стратегия
             </h3>
             <p className="text-[11px] md:text-[12px] text-muted-foreground leading-[2.2] tracking-[0.01em] font-light max-w-2xl">
               Полная стратегия развития: продуктовая матрица, точки масштабирования, коммуникация.
             </p>
             <div className="text-[13px] font-light tracking-wide text-foreground/90">
-              от 80 000 ₽
+              от 50 000 ₽
+            </div>
+          </div>
+
+          <div className="space-y-10 animate-fade-in">
+            <h3 className="text-[22px] md:text-[26px] font-light tracking-[-0.01em] text-foreground">
+              Партнерство
+            </h3>
+            <p className="text-[11px] md:text-[12px] text-muted-foreground leading-[2.2] tracking-[0.01em] font-light max-w-2xl">
+              Обсуждается индивидуально.
+            </p>
+            <div className="text-[13px] font-light tracking-wide text-foreground/90">
+              чек от 150 000 ₽
             </div>
           </div>
 
